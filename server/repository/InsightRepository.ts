@@ -1,7 +1,7 @@
 import { DbConnection } from "../db/index.ts";
 import * as insightsTable from "../db/tables/insights.ts";
 import type { Database } from "@db/sqlite";
-import type { Insight } from "$models/insight.ts";
+import type { Insight } from "../../lib/index.ts";
 
 export class InsightRepository {
   constructor(
@@ -42,7 +42,7 @@ export class InsightRepository {
   }
 
   getAllInsights(
-    { page = 0, limit = 10 }: { page?: number; limit?: number },
+    { page, limit }: { page: number; limit: number },
   ): Insight[] {
     const rows = this.db.prepare(insightsTable.selectAllStatement(page, limit))
       .all<

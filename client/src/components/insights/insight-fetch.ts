@@ -1,6 +1,10 @@
-import type { InsightRequest } from "../../../../lib/index.ts";
+import type {
+  Insight,
+  InsightRequest,
+  InsightResponse,
+} from "../../../../lib/index.ts";
 
-export async function addInsight(insight: InsightRequest) {
+export async function addInsight(insight: InsightRequest): Promise<Insight> {
   const response = await fetch("/api/insights", {
     method: "POST",
     headers: {
@@ -23,8 +27,8 @@ export async function deleteInsight(insightId: number) {
   });
 }
 
-export async function fetchInsights() {
-  const response = await fetch("/api/insights"); //TODO: add pagination support
+export async function fetchInsights(page: number): Promise<InsightResponse> {
+  const response = await fetch(`/api/insights?page=${page}&limit=2`);
   if (!response.ok) {
     throw new Error("Failed to fetch insights");
   }

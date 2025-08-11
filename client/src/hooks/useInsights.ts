@@ -4,19 +4,37 @@ import {
   deleteInsight,
   fetchInsights,
 } from "../components/insights/insight-fetch.ts";
-import type { InsightRequest } from "../../../lib/index.ts";
-import type { Insight } from "../schemas/insight.ts";
+import type { Insight, InsightRequest } from "../../../lib/index.ts";
 
 export const useInsights = () => {
+  const [page, setPage] = useState<number>(0);
   const [insights, setInsights] = useState<Insight[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [hasMore, setHasMore] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchInsights()
-      .then((data) => setInsights(data))
+    fetchInsights(page)
+      .then((data) => {
+        setInsights(data.insights);
+        setHasMore(data.hasMore);
+      })
       .catch((err) => setError(err.message)).finally(() => setLoading(false));
   }, []);
+
+  const loadMore = () => {
+    setLoading(true);
+    fetchInsights(page + 1)
+      .then((data) => {
+        setInsights((prevInsights) => [...prevInsights, ...data.insights]);
+        setHasMore(data.hasMore);
+        if (data.hasMore) {
+          setPage((prevPage) => prevPage + 1);
+        }
+      })
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  };
 
   const onAddInsight = async (insight: InsightRequest) => {
     try {
@@ -38,5 +56,13 @@ export const useInsights = () => {
     }
   };
 
-  return { insights, error, loading, onAddInsight, onDeleteInsight };
+  return {
+    insights,
+    error,
+    loading,
+    onAddInsight,
+    onDeleteInsight,
+    loadMore,
+    hasMore,
+  };
 };

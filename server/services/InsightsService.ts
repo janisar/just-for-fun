@@ -1,6 +1,9 @@
-import type { Insight } from "$models/insight.ts";
 import type * as insightsTable from "../db/tables/insights.ts";
-import type { InsightRequest } from "../../lib/index.ts";
+import type {
+  Insight,
+  InsightRequest,
+  InsightResponse,
+} from "../../lib/index.ts";
 import { InsightRepository } from "../repository/InsightRepository.ts";
 
 export class InsightsService {
@@ -36,8 +39,18 @@ export class InsightsService {
     return this.insightRepository.getInsightById(id);
   }
 
-  public listInsights(options: { page?: number; limit?: number }): Insight[] {
-    return this.insightRepository.getAllInsights(options);
+  public listInsights(
+    { page = 0, limit = 10 }: { page?: number; limit?: number },
+  ): InsightResponse {
+    const insights = this.insightRepository.getAllInsights({
+      page,
+      limit: limit + 1, // Fetch one extra to determine if there are more
+    });
+    const result = insights.slice(0, limit);
+    return {
+      insights: result,
+      hasMore: insights.length > result.length,
+    };
   }
 
   public deleteInsight(id: string): void {

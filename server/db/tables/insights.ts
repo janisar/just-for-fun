@@ -26,7 +26,7 @@ export const selectByIdStatement =
   `SELECT * FROM insights WHERE id = :id LIMIT 1`;
 export const selectAllStatement = (page: number, limit: number) =>
   `SELECT * FROM insights ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${
-    page * limit
+    page * (limit - 1)
   }`;
 
 export const deleteStatement = `DELETE FROM insights WHERE id = :id`;
