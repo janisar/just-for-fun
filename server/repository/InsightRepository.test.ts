@@ -1,9 +1,9 @@
-import type { Insight } from "$models/insight.ts";
 import { expect } from "jsr:@std/expect";
 import { afterAll, beforeAll, describe, it } from "jsr:@std/testing/bdd";
 import { Database } from "@db/sqlite";
 import { InsightRepository } from "./InsightRepository.ts";
 import * as insightsTable from "../db/tables/insights.ts";
+import type { Insight } from "../../lib/index.ts";
 
 describe("listing insights in the database", () => {
   describe("nothing in the DB", () => {
@@ -48,23 +48,32 @@ describe("listing insights in the database", () => {
     });
 
     it("returns non-empty result", () => {
-      const result = repository.getAllInsights({});
+      const result = repository.getAllInsights({
+        page: 0,
+        limit: 10,
+      });
       expect(result.length).toBeGreaterThan(0);
     });
 
     it("returns all insights in the DB", () => {
-      const result = repository.getAllInsights({});
+      const result = repository.getAllInsights({
+        page: 0,
+        limit: 10,
+      });
       expect(result).toHaveLength(4);
     });
 
     it("should order by createdAtDate", () => {
-      const result = repository.getAllInsights({});
+      const result = repository.getAllInsights({
+        page: 0,
+        limit: 10,
+      });
       expect(result[0].createdAt).toBeGreaterThanOrEqual(result[1].createdAt);
       expect(result[0].id).toBe(4);
     });
 
     it("should limit insights to limit", () => {
-      const result = repository.getAllInsights({ limit: 2 });
+      const result = repository.getAllInsights({ page: 0, limit: 2 });
       expect(result).toHaveLength(2);
       expect(result[0].id).toBe(4);
       expect(result[1].id).toBe(3);
