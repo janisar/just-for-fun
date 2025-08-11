@@ -24,7 +24,9 @@ export const insertStatement =
   `INSERT INTO insights (brand, createdAt, "text") VALUES (:brand, :createdAt, :text)`;
 export const selectByIdStatement =
   `SELECT * FROM insights WHERE id = :id LIMIT 1`;
-export const selectAllStatement =
-  `SELECT * FROM insights ORDER BY createdAt DESC LIMIT 100`; //TODO: Add pagination
+export const selectAllStatement = (page: number, limit: number) =>
+  `SELECT * FROM insights ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${
+    page * limit
+  }`;
 
 export const deleteStatement = `DELETE FROM insights WHERE id = :id`;

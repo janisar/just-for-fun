@@ -20,7 +20,7 @@ describe("listing insights in the database", () => {
     });
 
     it("returns empty result", () => {
-      result = repository.getAllInsights();
+      result = repository.getAllInsights({ page: 0, limit: 10 });
       expect(result).toEqual([]);
     });
   });
@@ -48,19 +48,33 @@ describe("listing insights in the database", () => {
     });
 
     it("returns non-empty result", () => {
-      const result = repository.getAllInsights();
+      const result = repository.getAllInsights({});
       expect(result.length).toBeGreaterThan(0);
     });
 
     it("returns all insights in the DB", () => {
-      const result = repository.getAllInsights();
+      const result = repository.getAllInsights({});
       expect(result).toHaveLength(4);
     });
 
     it("should order by createdAtDate", () => {
-      const result = repository.getAllInsights();
+      const result = repository.getAllInsights({});
       expect(result[0].createdAt).toBeGreaterThanOrEqual(result[1].createdAt);
       expect(result[0].id).toBe(4);
+    });
+
+    it("should limit insights to limit", () => {
+      const result = repository.getAllInsights({ limit: 2 });
+      expect(result).toHaveLength(2);
+      expect(result[0].id).toBe(4);
+      expect(result[1].id).toBe(3);
+    });
+
+    it("should paginate insights", () => {
+      const result = repository.getAllInsights({ page: 1, limit: 2 });
+      expect(result).toHaveLength(2);
+      expect(result[0].id).toBe(2);
+      expect(result[1].id).toBe(1);
     });
   });
 });

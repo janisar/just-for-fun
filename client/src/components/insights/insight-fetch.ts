@@ -24,7 +24,7 @@ export async function deleteInsight(insightId: number) {
 }
 
 export async function fetchInsights() {
-  const response = await fetch("/api/insights");
+  const response = await fetch("/api/insights"); //TODO: add pagination support
   if (!response.ok) {
     throw new Error("Failed to fetch insights");
   }

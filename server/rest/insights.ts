@@ -1,10 +1,9 @@
 import type { Router, RouterContext } from "@oak/oak";
 import { InsightsService } from "../services/InsightsService.ts";
 import { InsightRequestSchema } from "../../lib/index.ts";
+import * as zod from "zod";
 
-export default (router: Router) => {
-  const insightsService = new InsightsService();
-
+export default (router: Router, insightsService = new InsightsService()) => {
   router.post("/insights", async (ctx: RouterContext<"/insights">) => {
     const body = ctx.request.body;
     const value = await body.json();
@@ -15,7 +14,15 @@ export default (router: Router) => {
   });
 
   router.get("/insights", (ctx: RouterContext<"/insights">) => {
-    ctx.response.body = insightsService.listInsights();
+    const queryParams = ctx.request.url.searchParams;
+    const query = zod.object({
+      page: zod.coerce.number().optional().default(0),
+      limit: zod.coerce.number().optional().default(100),
+    }).parse({
+      page: queryParams.get("page"),
+      limit: queryParams.get("limit"),
+    });
+    ctx.response.body = insightsService.listInsights(query);
     ctx.response.status = 200;
   });
 

@@ -36,8 +36,8 @@ export class InsightsService {
     return this.insightRepository.getInsightById(id);
   }
 
-  public listInsights() {
-    return this.insightRepository.getAllInsights();
+  public listInsights(options: { page?: number; limit?: number }): Insight[] {
+    return this.insightRepository.getAllInsights(options);
   }
 
   public deleteInsight(id: string): void {

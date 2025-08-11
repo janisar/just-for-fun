@@ -15,7 +15,9 @@ export class InsightRepository {
     insight: Omit<insightsTable.Row, "id">,
   ): Insight | null {
     this.db.exec(insightsTable.insertStatement, {
-      ...insight,
+      createdAt: insight.createdAt,
+      text: insight.text,
+      brand: insight.brand,
     });
     const lastId = this.db.lastInsertRowId;
     return this.getInsightById(lastId);
@@ -39,10 +41,13 @@ export class InsightRepository {
     return null;
   }
 
-  getAllInsights(): Insight[] {
-    const rows = this.db.prepare(insightsTable.selectAllStatement).all<
-      insightsTable.Row
-    >();
+  getAllInsights(
+    { page = 0, limit = 10 }: { page?: number; limit?: number },
+  ): Insight[] {
+    const rows = this.db.prepare(insightsTable.selectAllStatement(page, limit))
+      .all<
+        insightsTable.Row
+      >();
     return rows.map((row) => {
       return {
         ...row,
