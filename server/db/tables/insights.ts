@@ -20,5 +20,10 @@ export type Insert = {
   text: string;
 };
 
-export const insertStatement = (item: Insert) =>
-  `INSERT INTO insights (brand, createdAt, "text") VALUES (${item.brand}, '${item.createdAt}', '${item.text}') RETURNING id, brand, createdAt, "text"`;
+export const insertStatement =
+  `INSERT INTO insights (brand, createdAt, "text") VALUES (:brand, :createdAt, :text)`;
+export const selectByIdStatement =
+  `SELECT * FROM insights WHERE id = :id LIMIT 1`;
+export const selectAllStatement =
+  `SELECT * FROM insights ORDER BY createdAt DESC`;
+export const deleteStatement = `DELETE FROM insights WHERE id = :id`;
