@@ -3,22 +3,23 @@ export const createTable = `
     id INTEGER PRIMARY KEY ASC NOT NULL,
     brand INTEGER NOT NULL,
     createdAt TEXT NOT NULL,
-    text TEXT NOT NULL
+    "text" TEXT NOT NULL
   )
 `;
 
 export type Row = {
   id: number;
   brand: number;
-  createdAt: string;
+  createdAt: number;
   text: string;
 };
 
 export type Insert = {
   brand: number;
-  createdAt: string;
+  createdAt: number;
   text: string;
 };
 
 export const insertStatement = (item: Insert) =>
-  `INSERT INTO insights (brand, createdAt, text) VALUES (${item.brand}, '${item.createdAt}', '${item.text}')`;
+    `INSERT INTO insights (brand, createdAt, "text") VALUES (${item.brand}, '${item.createdAt}', '${item.text}') RETURNING id, brand, createdAt, "text"`;
+

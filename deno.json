@@ -9,7 +9,8 @@
     },
     "dev:server": "cd server && deno task dev",
     "dev:client": "cd client && deno task dev",
-    "test:client": "cd client && deno task test"
+    "test:client": "cd client && deno task test",
+    "setup-db": "cd server && deno task setup-db"
   },
   "compilerOptions": {
     "strict": true,

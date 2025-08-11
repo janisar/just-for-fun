@@ -9,3 +9,11 @@
 .insights {
   margin-top: var(--size-10);
 }
+
+.error {
+    margin-top: var(--size-10);
+    text-align: center;
+    color: var(--color-red-500);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+}

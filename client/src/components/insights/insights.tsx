@@ -2,14 +2,16 @@ import { Trash2Icon } from "lucide-react";
 import { cx } from "../../lib/cx.ts";
 import styles from "./insights.module.css";
 import type { Insight } from "../../schemas/insight.ts";
+import { BRANDS } from "../../lib/consts.ts";
+import { formatUtcEpoch } from "../../utils/date.ts";
 
 type InsightsProps = {
   insights: Insight[];
   className?: string;
+  onDelete: (id: number) => void;
 };
 
-export const Insights = ({ insights, className }: InsightsProps) => {
-  const deleteInsight = () => undefined;
+export const Insights = ({ insights, className, onDelete }: InsightsProps) => {
 
   return (
     <div className={cx(className)}>
@@ -17,19 +19,26 @@ export const Insights = ({ insights, className }: InsightsProps) => {
       <div className={styles.list}>
         {insights?.length
           ? (
-            insights.map(({ id, text, date, brandId }) => (
+            insights.map(({ id, text, createdAt, brand }) => (
               <div className={styles.insight} key={id}>
                 <div className={styles["insight-meta"]}>
-                  <span>{brandId}</span>
+                  <span>
+                    {BRANDS.find((b) => b.id === brand)?.name ??
+                      "Unknown brand"}
+                  </span>
                   <div className={styles["insight-meta-details"]}>
-                    <span>{date.toString()}</span>
+                    <span>{formatUtcEpoch(createdAt)}</span>
                     <Trash2Icon
                       className={styles["insight-delete"]}
-                      onClick={deleteInsight}
+                      onClick={() =>
+                        onDelete(id)}
                     />
                   </div>
                 </div>
-                <p className={styles["insight-content"]}>{text}</p>
+                <p className={styles["insight-content"]}>
+                  <span className={styles["insight-label"]}>Insight:</span>
+                  {text}
+                </p>
               </div>
             ))
           )
