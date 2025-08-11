@@ -45,8 +45,8 @@
 }
 
 .insight-label {
-    display: inline-block;
-    font: var(--text-sm);
-    color: var(--color-text-light);
-    margin-right: var(--size-2);
+  display: inline-block;
+  font: var(--text-sm);
+  color: var(--color-text-light);
+  margin-right: var(--size-2);
 }

@@ -1,6 +1,6 @@
 import * as oak from "@oak/oak";
 import { Port } from "../lib/index.ts";
-import insightsRoutes from './rest/insights.ts';
+import insightsRoutes from "./rest/insights.ts";
 import { DbConnection } from "./db/index.ts";
 
 console.log("Loading configuration");

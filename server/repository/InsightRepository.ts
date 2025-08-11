@@ -14,17 +14,19 @@ export class InsightRepository {
     const sql = insightsTable.insertStatement(insight);
     console.log("Executing SQL to create insight:", sql);
     this.db.exec(
-        `INSERT INTO insights (brand, createdAt, "text") VALUES (:brand, :createdAt, :text)`,
-        {
-          ...insight
-        },
+      `INSERT INTO insights (brand, createdAt, "text") VALUES (:brand, :createdAt, :text)`,
+      {
+        ...insight,
+      },
     );
     const lastId = this.db.lastInsertRowId;
     return this.getInsightById(lastId);
   }
 
   public getInsightById(id: string | number): Insight | null {
-    const [row] = this.db.prepare(`SELECT * FROM insights WHERE id = :id LIMIT 1`).all<insightsTable.Row>({
+    const [row] = this.db.prepare(
+      `SELECT * FROM insights WHERE id = :id LIMIT 1`,
+    ).all<insightsTable.Row>({
       id: id,
     });
 
@@ -40,7 +42,9 @@ export class InsightRepository {
   }
 
   getAllInsights(): Insight[] {
-    const rows = this.db.sql<insightsTable.Row>`SELECT * FROM insights ORDER BY createdAt DESC`;
+    const rows = this.db.sql<
+      insightsTable.Row
+    >`SELECT * FROM insights ORDER BY createdAt DESC`;
     return rows.map((row) => {
       return {
         ...row,

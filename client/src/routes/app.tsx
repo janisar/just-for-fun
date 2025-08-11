@@ -46,7 +46,7 @@ export const App = () => {
         insights={insights}
         onDelete={onDeleteInsight}
       />
-        {error && <p className={styles.error}>{error}</p>}
+      {error && <p className={styles.error}>{error}</p>}
     </main>
   );
 };

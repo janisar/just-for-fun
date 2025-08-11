@@ -10,7 +10,9 @@
     "dev:server": "cd server && deno task dev",
     "dev:client": "cd client && deno task dev",
     "test:client": "cd client && deno task test",
-    "setup-db": "cd server && deno task setup-db"
+    "setup-db": "cd server && deno task setup-db",
+    "prettier": "deno fmt --check",
+    "format": "deno fmt"
   },
   "compilerOptions": {
     "strict": true,

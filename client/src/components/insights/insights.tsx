@@ -12,7 +12,6 @@ type InsightsProps = {
 };
 
 export const Insights = ({ insights, className, onDelete }: InsightsProps) => {
-
   return (
     <div className={cx(className)}>
       <h1 className={styles.heading}>Insights</h1>
@@ -23,15 +22,16 @@ export const Insights = ({ insights, className, onDelete }: InsightsProps) => {
               <div className={styles.insight} key={id}>
                 <div className={styles["insight-meta"]}>
                   <span>
-                    {BRANDS.find((b) => b.id === brand)?.name ??
+                    {BRANDS.find((b) =>
+                      b.id === brand
+                    )?.name ??
                       "Unknown brand"}
                   </span>
                   <div className={styles["insight-meta-details"]}>
                     <span>{formatUtcEpoch(createdAt)}</span>
                     <Trash2Icon
                       className={styles["insight-delete"]}
-                      onClick={() =>
-                        onDelete(id)}
+                      onClick={() => onDelete(id)}
                     />
                   </div>
                 </div>

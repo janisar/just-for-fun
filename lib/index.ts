@@ -1,2 +1,2 @@
-export * from './utils/index.ts';
-export * from './types/insight.ts';
+export * from "./utils/index.ts";
+export * from "./types/insight.ts";

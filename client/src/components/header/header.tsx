@@ -1,4 +1,4 @@
-import { useState, type FunctionComponent } from "react";
+import { type FunctionComponent, useState } from "react";
 import { Button } from "../button/button.tsx";
 import styles from "./header.module.css";
 import { AddInsight } from "../insights/add-insight/add-insight.tsx";
@@ -7,10 +7,10 @@ import type { InsightRequest } from "../../../../lib/index.ts";
 export const HEADER_TEXT = "Suit Tracker Insights";
 
 type Props = {
-    addInsight: (insight: InsightRequest) => void;
+  addInsight: (insight: InsightRequest) => void;
 };
 
-export const Header: FunctionComponent<Props> = ({addInsight}) => {
+export const Header: FunctionComponent<Props> = ({ addInsight }) => {
   const [addInsightOpen, setAddInsightOpen] = useState(false);
 
   return (

@@ -4,7 +4,8 @@ This is the server component of the Suit Tracker application.
 
 ## Database Setup
 
-The application uses SQLite as its database. Follow these steps to set up the database:
+The application uses SQLite as its database. Follow these steps to set up the
+database:
 
 ### Automatic Setup
 
@@ -20,6 +21,7 @@ deno task setup-db
 ```
 
 This will:
+
 1. Create the database file at `server/tmp/db.sqlite3` if it doesn't exist
 2. Create the necessary tables in the database
 
@@ -45,7 +47,8 @@ If you prefer to set up the database manually, you can:
 
 ## Sample Data (Optional)
 
-If you want to add sample data to the database, you can modify the `setup-db.ts` file:
+If you want to add sample data to the database, you can modify the `setup-db.ts`
+file:
 
 1. Open the file in your editor
 2. Uncomment the sample data section (lines 22-40)
@@ -65,4 +68,5 @@ cd server
 deno task dev
 ```
 
-The server will be available at http://localhost:8080 (or the port specified in your .env file).
+The server will be available at http://localhost:8080 (or the port specified in
+your .env file).
